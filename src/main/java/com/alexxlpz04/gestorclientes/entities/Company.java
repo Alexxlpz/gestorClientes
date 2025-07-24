@@ -10,6 +10,7 @@ import lombok.Setter;
 public class Company {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "companyName", length = 100)

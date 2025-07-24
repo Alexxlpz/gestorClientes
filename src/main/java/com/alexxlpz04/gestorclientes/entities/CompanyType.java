@@ -1,9 +1,6 @@
 package com.alexxlpz04.gestorclientes.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +11,7 @@ import lombok.Setter;
 public class CompanyType {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "companyType", nullable = false, length = 100)
