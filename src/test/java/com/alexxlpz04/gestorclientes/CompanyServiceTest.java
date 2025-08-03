@@ -3,8 +3,8 @@ package com.alexxlpz04.gestorclientes;
 import com.alexxlpz04.gestorclientes.dao.AppointmentRepository;
 import com.alexxlpz04.gestorclientes.dao.CompanyRepository;
 import com.alexxlpz04.gestorclientes.dao.RecordRepository;
-import com.alexxlpz04.gestorclientes.entities.Appointment;
-import com.alexxlpz04.gestorclientes.entities.Company;
+import com.alexxlpz04.gestorclientes.entities.*;
+import com.alexxlpz04.gestorclientes.entities.Record;
 import com.alexxlpz04.gestorclientes.services.CompanyService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.DisplayName;
@@ -225,5 +225,71 @@ public class CompanyServiceTest {
         }
     }
 
+    @Nested
+    @DisplayName("UNIT test for createRecord method")
+    public class createRecordTest {
+
+        @Mock
+        CompanyRepository companyRepository;
+
+        @Mock
+        RecordRepository recordRepository;
+
+        @Mock
+        HttpSession session;
+
+        @Mock
+        AppointmentRepository appointmentRepository;
+
+        @InjectMocks
+        CompanyService companyService;
+
+        @Test
+        @DisplayName("user successfully registers as a client of the company")
+        public void createRecord_userRegistersSuccessfully_returnCompanyView() {
+            // Arrange
+            when(session.getAttribute("user")).thenReturn(new User());
+            when(companyRepository.findById(1)).thenReturn(Optional.of(new Company()));
+            Model model = mock(Model.class);
+            int companyid = 1;
+            User user = new User();
+            user.setId(1);
+            Company company = new Company();
+            company.setCompanyName("Test Company");
+            company.setDiasAbiertos("Monday;Tuesday;Wednesday");
+            when(companyRepository.findById(companyid)).thenReturn(Optional.of(company));
+
+            List<Appointment> appointments = new ArrayList<>();
+            appointments.add(new Appointment());
+            appointments.add(new Appointment());
+            when(appointmentRepository.findByUserAndCompany(user.getId(), companyid)).thenReturn(appointments);
+
+            when(session.getAttribute("user")).thenReturn(user);
+            when(companyRepository.findById(companyid)).thenReturn(Optional.of(company));
+
+            //Act
+            String result = companyService.createRecord(model, session, companyid);
+
+            // Assert
+            assertEquals("company/view_company", result);
+            verify(recordRepository, times(1)).save(any(Record.class));
+            verify(model, times(1)).addAttribute("message", "te has registrado correctamente como cliente de la empresa Test Company");
+        }
+
+        @Test
+        @DisplayName("company not found, returns error page")
+        public void createRecord_companyNotFound_returnErrorPage() {
+            Model model = mock(Model.class);
+            int companyid = -1;
+
+            when(companyRepository.findById(companyid)).thenReturn(Optional.empty());
+
+            String result = companyService.createRecord(model, session, companyid);
+
+            assertEquals("error/error_page", result);
+            verify(model, times(1)).addAttribute("error", "Company not found");
+            verify(recordRepository, never()).save(any(Record.class));
+        }
+    }
 
 }
