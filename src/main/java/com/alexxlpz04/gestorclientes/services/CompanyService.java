@@ -2,6 +2,7 @@ package com.alexxlpz04.gestorclientes.services;
 
 import com.alexxlpz04.gestorclientes.dao.AppointmentRepository;
 import com.alexxlpz04.gestorclientes.dao.CompanyRepository;
+import com.alexxlpz04.gestorclientes.dao.RecordRepository;
 import com.alexxlpz04.gestorclientes.entities.Appointment;
 import com.alexxlpz04.gestorclientes.entities.Company;
 import com.alexxlpz04.gestorclientes.entities.Record;
@@ -22,6 +23,9 @@ public class CompanyService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private RecordRepository recordRepository;
 
     public String companyList(Model model) {
         List<Company> companies = companyRepository.findAll();
@@ -55,7 +59,7 @@ public class CompanyService {
 
         String[] days = company.getDiasAbiertos().split(";");
 
-
+        model.addAttribute("registered", this.recordRepository.isRegisteredUser(userid, companyid));
         model.addAttribute("days", days);
         model.addAttribute("company", company);
         model.addAttribute("appointments", appointments);
@@ -65,12 +69,12 @@ public class CompanyService {
     public String createRecord(Model model, HttpSession session, Integer companyid) {
         User user = (User) session.getAttribute("user");
         Company company = this.companyRepository.findById(companyid).orElse(null);
-        com.alexxlpz04.gestorclientes.entities.Record record = new Record();
+        Record record = new Record();
         if (company != null) {
             record.setCompany(company);
             record.setUser(user);
             record.setCompleted(false);
-            model.addAttribute("record", record);
+            this.recordRepository.save(record);
             model.addAttribute("message", "te has registrado correctamente como cliente de la empresa " + company.getCompanyName());
             return this.viewCompany(model, session, user != null ? user.getId() : -1, companyid);
         } else {

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ui.Model;
 
@@ -33,6 +34,8 @@ public class SchemeServiceTest {
 
     @InjectMocks
     private SchemaService schemaService;
+    @Autowired
+    private HttpSession httpSession;
 
     @Nested
     @DisplayName("UNIT test for schemaList method")
@@ -98,7 +101,7 @@ public class SchemeServiceTest {
             schemaForm.setCompanyId(company.getId());
 
             // Act
-            String result = schemaService.guardarSchema(schemaForm);
+            String result = schemaService.guardarSchema(schemaForm, httpSession);
             // Assert
             assertEquals("redirect:/schema/", result);
             verify(schemaRepository, times(1)).findById(schemaForm.getId());
@@ -115,7 +118,7 @@ public class SchemeServiceTest {
             schemaForm.setCompanyId(company.getId());
 
             // Act
-            String result = schemaService.guardarSchema(schemaForm);
+            String result = schemaService.guardarSchema(schemaForm, httpSession);
             // Assert
             assertEquals("redirect:/schema/", result);
             verify(schemaRepository, never()).findById(schemaForm.getId());

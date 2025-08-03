@@ -19,6 +19,7 @@
 <html>
 <head>
     <title>Detalles de la Compañía</title>
+    <%@include file="/WEB-INF/components/navbar_User.jsp"%>
 </head>
 <body>
 
@@ -52,7 +53,14 @@
     </c:otherwise>
 </c:choose>
 
-<p>si eres cliente pulsa <a href="/schema/createRecord?companyid=<%=company.getId()%>"> aqui </a></p>
+<c:choose>
+    <c:when test="${registered}">
+        <p>Ya te has registrado como cliente en esta compañia</p>
+    </c:when>
+    <c:otherwise>
+        <p>si eres cliente pulsa <a href="/company/createRecord?companyid=<%=company.getId()%>"> aqui </a></p>
+    </c:otherwise>
+</c:choose>
 
 </body>
 </html>

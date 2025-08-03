@@ -2,6 +2,7 @@ package com.alexxlpz04.gestorclientes;
 
 import com.alexxlpz04.gestorclientes.dao.AppointmentRepository;
 import com.alexxlpz04.gestorclientes.dao.CompanyRepository;
+import com.alexxlpz04.gestorclientes.dao.RecordRepository;
 import com.alexxlpz04.gestorclientes.entities.Appointment;
 import com.alexxlpz04.gestorclientes.entities.Company;
 import com.alexxlpz04.gestorclientes.services.CompanyService;
@@ -139,6 +140,9 @@ public class CompanyServiceTest {
 
         @Mock
         AppointmentRepository appointmentRepository;
+
+        @Mock
+        RecordRepository recordRepository;
 
         @InjectMocks
         CompanyService companyService;

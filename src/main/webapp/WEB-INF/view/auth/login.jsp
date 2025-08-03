@@ -1,37 +1,41 @@
+<jsp:useBean id="error" scope="request" class="java.lang.String" type="java.lang.String"/>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: alejandro
-  Date: 7/17/25
-  Time: 5:36 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth/login.css">
 </head>
 <body>
 
-<h1>Login Page</h1>
+<div class="form-container">
+    <h1>Login</h1>
 
-<form:form action="/auth/dologin" method="post" modelAttribute="authForm">
-    <label for="username">usuario: </label> <br/>
-    <form:input path="username" id="username" placeholder="Username..." /> <br/>
-    <label for="password">contraseña: </label> <br/>
-    <form:input path="password" type="password" id="password"  placeholder="Password..." /> <br/>
-    <label for="isCompany">soy una empresa </label>
-    <form:checkbox path="company" id="isCompany"/>
-    <form:button>Login</form:button>
-</form:form>
+    <form:form action="/auth/dologin" method="post" modelAttribute="authForm">
+        <label for="username">Usuario:</label>
+        <form:input path="username" id="username" placeholder="Username..." />
 
-<p>
-    si no tienes cuenta pulsa <a href="/auth/register">Register</a>
-</p>
+        <label for="password">Contraseña:</label>
+        <form:input path="password" type="password" id="password" placeholder="Password..." />
 
-<br/>
+        <div class="toggle-container">
+             <label for="companyToggle">¿eres empresa?</label>
+             <label class="switch">
+                 <input type="checkbox" name="company" id="companyToggle"/>
+                 <span class="slider"></span>
+             </label>
+         </div>
 
-<p>${error}</p>
+        <div>
+            <form:button type="submit" class="glass-button">Login</form:button>
+        </div>
+    </form:form>
+
+    <div class="form-footer">
+        <p>¿No tienes cuenta? <a href="${pageContext.request.contextPath}/auth/register">Regístrate</a></p>
+        <p style="color:red">${error}</p>
+    </div>
+</div>
 
 </body>
 </html>

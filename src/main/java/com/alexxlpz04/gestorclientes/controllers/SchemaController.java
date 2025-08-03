@@ -32,8 +32,8 @@ public class SchemaController {
     }
 
     @PostMapping("/doAddSchema")
-    public String doAddSchema(SchemaForm schemaForm) {
-        return this.schemaService.guardarSchema(schemaForm);
+    public String doAddSchema(SchemaForm schemaForm, HttpSession session) {
+        return this.schemaService.guardarSchema(schemaForm, session);
     }
 
     @GetMapping("/editSchema")
@@ -42,8 +42,8 @@ public class SchemaController {
     }
 
     @PostMapping("/doEditSchema")
-    public String doEditSchema(SchemaForm schemaForm) {
-        return this.schemaService.guardarSchema(schemaForm);
+    public String doEditSchema(SchemaForm schemaForm, HttpSession session) {
+        return this.schemaService.guardarSchema(schemaForm, session);
     }
 
     @GetMapping("/removeSchema")

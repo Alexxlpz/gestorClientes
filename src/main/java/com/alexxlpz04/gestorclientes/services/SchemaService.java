@@ -39,9 +39,11 @@ public class SchemaService {
         return "schema/add_schema";
     }
 
-    public String guardarSchema(SchemaForm schemaForm) {
+    public String guardarSchema(SchemaForm schemaForm, HttpSession session) {
         Schema schema = schemaForm.toSchema();
         Schema schemaSaved = new Schema();
+        Company company = (Company) session.getAttribute("company");
+        schema.setCompany(company);
 
         if(schema.getId() == 0) {
             schemaSaved.setName(schema.getName());
