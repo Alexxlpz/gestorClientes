@@ -40,7 +40,7 @@ public class RecordService {
     }
 
     public String viewRecord(Model model, HttpSession session, Integer recordid, Integer companyid) {
-        if (recordid == null) {
+        if (recordid == null || companyid == null) {
             model.addAttribute("error", "Ha habido un error al intentar ver el registro");
             return "error";
         }

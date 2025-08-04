@@ -130,7 +130,6 @@ public class CompanyServiceTest {
         }
     }
 
-    //TODO: test viewCompany method
     @Nested
     @DisplayName("UNIT test for viewCompany method")
     class viewCompanyTest {
