@@ -18,12 +18,12 @@
 <html>
 <head>
     <title>Gestor de clientes</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}css/home/home.css">
     <%if(isCompany){%>
         <%@include file="/WEB-INF/components/navbar_Company.jsp"%>
     <%}else {%>
         <%@include file="/WEB-INF/components/navbar_User.jsp"%>
     <%}%>
-
 </head>
 <body>
 

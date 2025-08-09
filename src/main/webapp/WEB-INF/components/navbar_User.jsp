@@ -5,7 +5,10 @@
   Time: 5:12 PM
   To change this template use File | Settings | File Templates.
 --%>
-<nav>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}css/components/navbar.css">
+
+<nav class="nav-container">
     <ul>
         <li><a href="/auth/login">Login</a></li>
         <li><a href="/auth/register">Register</a></li>
